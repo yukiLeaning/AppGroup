@@ -1,0 +1,14 @@
+﻿<Application x:Class="AppGroup.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:AppGroup"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <!-- Font定義 -->
+        <sys:Double x:Key="S_TextSize">10</sys:Double>
+        <sys:Double x:Key="M_TextSize">14</sys:Double>
+        <sys:Double x:Key="L_TextSize">18</sys:Double>
+        <FontFamily x:Key="MainFont">Yu Gothic UI</FontFamily>
+    </Application.Resources>
+</Application>
