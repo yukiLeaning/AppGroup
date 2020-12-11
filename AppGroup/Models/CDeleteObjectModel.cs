@@ -12,7 +12,7 @@ namespace AppGroup.Models
         {
         }
 
-        public void DeleteObject(string objectPath)
+        public string DeleteObject(string objectPath)
         {
             var errorMessage = string.Empty;
             
