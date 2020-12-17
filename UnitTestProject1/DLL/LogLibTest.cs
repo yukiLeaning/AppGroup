@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 
-namespace AppGroup_UnitTest.Framework
+namespace UnitTestProject1.DLL
 {
     [TestClass]
     public class LogManagerTest

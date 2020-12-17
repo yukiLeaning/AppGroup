@@ -8,10 +8,12 @@ namespace LogLib
 {
     public class LogManager
     {
-        //定値
+        private const string logConfigFileName = @"LogConfig.xml";
+        //TODO削除
         private const string delimiter = @"\";
         private const string logDirectoryName = "Log";
         private const string applicationLogFileName = "Application.log";
+        //定値
         private static int frameCount = 1; //StackFrame数(1ならば直接呼び出したメソッド)
         //メンバ変数
         private static string logDirectoryPath;
@@ -33,7 +35,7 @@ namespace LogLib
             {LogLevel_Enum.Error,       "[ERR]"},
             {LogLevel_Enum.Warning,     "[WAN]"},
             {LogLevel_Enum.Debug,       "[DEB]"},
-            {LogLevel_Enum.Verbose,     "[VRB]"},
+            {LogLevel_Enum.Verbose,     "[VBO]"},
         };
 
         /// <summary>
@@ -41,6 +43,14 @@ namespace LogLib
         /// </summary>
         public LogManager()
         {
+            //コンフィグファイルの読み込み
+            string logconfigFilePath = CreatePath(Environment.CurrentDirectory, logConfigFileName);
+            if (!File.Exists(logconfigFilePath))
+            {
+                //コンフィグファイルがなければデフォルト値で作成する
+                CreateConfigFile(logconfigFilePath);
+            }
+
             logDirectoryPath = CreatePath(Environment.CurrentDirectory, logDirectoryName);
             applicationLogFilePath = CreatePath(logDirectoryPath, applicationLogFileName);
             try
@@ -238,6 +248,35 @@ namespace LogLib
             result += "**********************************************************************************************" + "\n";
 
             return result;
+        }
+
+        //コンフィグファイルを作成
+        private void CreateConfigFile(string configFilePath)
+        {
+            using (FileStream fileStream = File.Create(configFilePath))
+            {
+                string xmlValue = string.Empty;
+                xmlValue += "<?xml version=\"1.0\" encoding=\"utf-8\"?>" + "\n";
+                xmlValue += "<ApplicationLog>" + "\n";
+                xmlValue += "    <Output>C:\\tmp\\</Output>" + "\n";
+                xmlValue += "    <Level>0</Level>" + "\n";
+                xmlValue += "</ApplicationLog>" + "\n";
+
+                byte[] byteStr = Encoding.Unicode.GetBytes(xmlValue);
+                fileStream.Write(byteStr, 0, byteStr.Length);
+            }
+        }
+
+        //コンフィグファイルからApplicationログのファイルパスを取得
+        private string GetApplicationLogFilePath()
+        {
+            throw new NotImplementedException();
+        }
+
+        //コンフィグファイルからログレベルを取得
+        private LogLevel_Enum GetLogLevel()
+        {
+            throw new NotImplementedException();
         }
     }
 }
