@@ -9,27 +9,14 @@ namespace AppGroup.Models
     class CModelFactory
     {
         // メンバ変数
-        static CModelFactory instance = null;
+        static CModelFactory instance = new CModelFactory();
         Dictionary<EModel, AModel> modelTable = null;
-
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        public CModelFactory()
-        {
-            // メンバ変数の初期化
-            instance = new CModelFactory();
-            this.modelTable = new Dictionary<EModel, AModel>();
-
-            // 初期化関数呼び出し
-            this.InitializeModelTable();
-        }
-
+        
         /// <summary>
         /// モデルFactoryクラスのインスタンスを取得.
         /// </summary>
         /// <returns>モデルFactoryインスタンス</returns>
-        public CModelFactory GetInstnace()
+        static public CModelFactory GetInstnace()
         {
             if (instance == null)
             {
@@ -55,6 +42,18 @@ namespace AppGroup.Models
             modelTable.TryGetValue(eModel, out ret);
 
             return ret;
+        }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        private CModelFactory()
+        {
+            // メンバ変数の初期化
+            modelTable = new Dictionary<EModel, AModel>();
+
+            // 初期化関数呼び出し
+            this.InitializeModelTable();
         }
 
         /// <summary>

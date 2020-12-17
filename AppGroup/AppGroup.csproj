@@ -76,12 +76,18 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Framework\Enumeration.cs" />
+    <Compile Include="Framework\ResourceManagers.cs" />
     <Compile Include="Models\CCopyFolederConfigurationModel.cs" />
     <Compile Include="Models\IModel.cs" />
     <Compile Include="Models\EModel.cs" />
     <Compile Include="Models\AModel.cs" />
     <Compile Include="Models\CModelFactory.cs" />
     <Compile Include="Models\CResourceMonitorModel.cs" />
+    <Compile Include="Properties\LangResource_jp.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LangResource_jp.resx</DependentUpon>
+    </Compile>
     <Compile Include="Views\PopupWindows\ConvertNameBulkWindow.xaml.cs">
       <DependentUpon>ConvertNameBulkWindow.xaml</DependentUpon>
     </Compile>
@@ -113,7 +119,6 @@
     </Compile>
     <Compile Include="DataObjects\Enums\ApplicationErrorCode_Enum.cs" />
     <Compile Include="DataObjects\Enums\DeletePatern_Enum.cs" />
-    <Compile Include="Framework\ApplicationContext.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -178,19 +183,23 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
+    <Compile Include="Properties\LangResources_en.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
+      <DependentUpon>LangResources_en.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
+    <EmbeddedResource Include="Properties\LangResources_en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LangResources_en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\LangResource_jp.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <LastGenOutput>LangResource_jp.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Bat\CopyFolder.bat" />
     <None Include="packages.config" />
@@ -222,6 +231,10 @@
     <ProjectReference Include="..\FileFolderOperationLib\UtilityLib.csproj">
       <Project>{19405ebc-d490-4327-882a-93172c57f189}</Project>
       <Name>UtilityLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LogLib\LogLib.csproj">
+      <Project>{1e5f0c84-d46c-4eb4-b8c9-4d0eafc1f62e}</Project>
+      <Name>LogLib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using AppGroup.Framework;
+using AppGroup.Properties;
 
 namespace AppGroup.Views.Pages
 {
@@ -67,31 +69,31 @@ namespace AppGroup.Views.Pages
             this.m_WindowMap.Add(
                 WindowName.DeleteObject,
                 new WindowStruct(
-                    typeof(DeleteWindow), new DeleteWindow(), "完全削除"
+                    typeof(DeleteWindow), new DeleteWindow(), LangResource_jp.CONTENT_COMPLETE_REMOVAL
             ));
             // 構成コピー
             this.m_WindowMap.Add(
                 WindowName.ConfigurationCopy,
                 new WindowStruct(
-                    typeof(CopyFolderWindow), new CopyFolderWindow(), "構成コピー"
+                    typeof(CopyFolderWindow), new CopyFolderWindow(), LangResource_jp.CONTENT_CONFIGURATION_COPY
             ));
             // PDF変換
             this.m_WindowMap.Add(
                 WindowName.ConvertPDF,
                 new WindowStruct(
-                    typeof(ConvertPDFWindow), new ConvertPDFWindow(), "PDF変換"
+                    typeof(ConvertPDFWindow), new ConvertPDFWindow(), LangResource_jp.CONTENT_PDF_CONVERSION
             ));
             // PCモニター
             this.m_WindowMap.Add(
                 WindowName.PCMonitor,
                 new WindowStruct(
-                    typeof(PCMonitorWindow), new PCMonitorWindow(), "PCモニター"
+                    typeof(PCMonitorWindow), new PCMonitorWindow(), LangResource_jp.CONTENT_PC_MONITOR
             ));
             // ファイル名一括変換
             this.m_WindowMap.Add(
                 WindowName.ConvertNameBulk,
                 new WindowStruct(
-                    typeof(ConvertNameBulkWindow), new ConvertNameBulkWindow(), "ファイル名一括変換"
+                    typeof(ConvertNameBulkWindow), new ConvertNameBulkWindow(), LangResource_jp.CONTENT_FILE_NAME_BATCH_CONVERSION
             ));
         }
 

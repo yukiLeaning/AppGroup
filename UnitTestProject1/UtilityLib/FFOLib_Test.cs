@@ -2,7 +2,7 @@
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace UnitTestProject1.UtilityLib
+namespace AppGroup_UnitTest.UtilityLib
 {
     [TestClass]
     public class FFOLib_Test

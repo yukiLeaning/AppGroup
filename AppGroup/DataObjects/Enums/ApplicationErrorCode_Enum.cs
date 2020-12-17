@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AppGroup.DataObjects.Enums
 {
-    enum ApplicationErrorCode_Enum
+    public enum ApplicationErrorCode_Enum
     {
         Invalid = 0x0000,   //未定義
         Success = 0x0001,   //成功
