@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Linq;
+using System.Xml.Linq;
 
 namespace LogLib
 {
@@ -19,14 +21,27 @@ namespace LogLib
         private static string logDirectoryPath;
         private static string applicationLogFilePath;
         
-        
-        private enum LogLevel_Enum : int
+        internal enum LogLevel_Enum : int
         {
-            Infomation = 0,
-            Error,
-            Warning,
-            Debug,
-            Verbose
+            Infomation  = 0,
+            Error       = 1,
+            Warning     = 2,
+            Debug       = 3,
+            Verbose     = 4
+        }
+
+        internal struct LogInfo
+        {
+            readonly string FileName;
+            readonly string DirectoryPath;
+            readonly int Level;
+
+            internal LogInfo(string fileName, string directoryPath, int level)
+            {
+                FileName = fileName;
+                DirectoryPath = directoryPath;
+                Level = level;
+            }
         }
 
         private static Dictionary<LogLevel_Enum, string> dictionary = new Dictionary<LogLevel_Enum, string>()
@@ -35,7 +50,7 @@ namespace LogLib
             {LogLevel_Enum.Error,       "[ERR]"},
             {LogLevel_Enum.Warning,     "[WAN]"},
             {LogLevel_Enum.Debug,       "[DEB]"},
-            {LogLevel_Enum.Verbose,     "[VBO]"},
+            {LogLevel_Enum.Verbose,     "[VEB]"},
         };
 
         /// <summary>
@@ -43,14 +58,6 @@ namespace LogLib
         /// </summary>
         public LogManager()
         {
-            //コンフィグファイルの読み込み
-            string logconfigFilePath = CreatePath(Environment.CurrentDirectory, logConfigFileName);
-            if (!File.Exists(logconfigFilePath))
-            {
-                //コンフィグファイルがなければデフォルト値で作成する
-                CreateConfigFile(logconfigFilePath);
-            }
-
             logDirectoryPath = CreatePath(Environment.CurrentDirectory, logDirectoryName);
             applicationLogFilePath = CreatePath(logDirectoryPath, applicationLogFileName);
             try
@@ -80,8 +87,13 @@ namespace LogLib
         /// InfomationレベルでApplicationログを書き込む
         /// </summary>
         /// <param name="log">出力ログ</param>
-        public static void InfomationWriteApplicationLog(string log)
+        public static void InfomationWriteApplicationLog(string log, bool isStack = false)
         {
+            if (isStack)
+            {
+                StackFrame stackFrame = new StackFrame(frameCount);
+                AddStackFrame(ref log, stackFrame);
+            }
             WriteApplicationLog(log, LogLevel_Enum.Infomation);
         }
 
@@ -89,8 +101,13 @@ namespace LogLib
         /// ErrorレベルでApplicationログを書き込む
         /// </summary>
         /// <param name="log">出力ログ</param>
-        public static void ErrorWriteApplicationLog(string log)
+        public static void ErrorWriteApplicationLog(string log, bool isStack = false)
         {
+            if (isStack)
+            {
+                StackFrame stackFrame = new StackFrame(frameCount);
+                AddStackFrame(ref log, stackFrame);
+            }
             WriteApplicationLog(log, LogLevel_Enum.Error);
         }
 
@@ -98,8 +115,13 @@ namespace LogLib
         /// DebugレベルでApplicationログを書き込む
         /// </summary>
         /// <param name="log">出力ログ</param>
-        public static void DebugWriteApplicationLog(string log)
+        public static void DebugWriteApplicationLog(string log, bool isStack = false)
         {
+            if (isStack)
+            {
+                StackFrame stackFrame = new StackFrame(frameCount);
+                AddStackFrame(ref log, stackFrame);
+            }
             WriteApplicationLog(log, LogLevel_Enum.Debug);
         }
 
@@ -107,8 +129,13 @@ namespace LogLib
         /// WarningレベルでApplicationログを書き込む
         /// </summary>
         /// <param name="log">出力ログ</param>
-        public static void WarningWriteApplicationLog(string log)
+        public static void WarningWriteApplicationLog(string log, bool isStack = false)
         {
+            if (isStack)
+            {
+                StackFrame stackFrame = new StackFrame(frameCount);
+                AddStackFrame(ref log, stackFrame);
+            }
             WriteApplicationLog(log, LogLevel_Enum.Warning);
         }
 
@@ -116,8 +143,13 @@ namespace LogLib
         /// VerboseレベルでApplicationログを書き込む
         /// </summary>
         /// <param name="log">出力ログ</param>
-        public static void VerboseWriteApplicationLog(string log)
+        public static void VerboseWriteApplicationLog(string log, bool isStack = false)
         {
+            if (isStack)
+            {
+                StackFrame stackFrame = new StackFrame(frameCount);
+                AddStackFrame(ref log, stackFrame);
+            }
             WriteApplicationLog(log, LogLevel_Enum.Verbose);
         }
 
@@ -127,7 +159,7 @@ namespace LogLib
         public static void WriteCallStack_In()
         {
             StackFrame stackFrame = new StackFrame(frameCount);
-            string log = "In ";
+            string log = "In";
             AddStackFrame(ref log, stackFrame);
 
             WriteApplicationLog(log, LogLevel_Enum.Verbose);
@@ -139,7 +171,7 @@ namespace LogLib
         public static void WriteCallStack_Out()
         {
             StackFrame stackFrame = new StackFrame(frameCount);
-            string log = "Out ";
+            string log = "Out";
             AddStackFrame(ref log, stackFrame);
 
             WriteApplicationLog(log, LogLevel_Enum.Verbose);
@@ -205,9 +237,9 @@ namespace LogLib
             {
                 string stackFrameStr = string.Empty;
                 //呼び出し元のメソッド名を取得
-                stackFrameStr += "method=[" + stackFrame.GetMethod().Name + "()],";
+                stackFrameStr += " (method=[" + stackFrame.GetMethod().Name + "()],";
                 //呼び出し元のクラス名を取得
-                stackFrameStr += "class=[" + stackFrame.GetMethod().ReflectedType.FullName + "]";
+                stackFrameStr += "class=[" + stackFrame.GetMethod().ReflectedType.FullName + "])";
                 logStr += stackFrameStr;
             }
             catch
@@ -257,13 +289,51 @@ namespace LogLib
             {
                 string xmlValue = string.Empty;
                 xmlValue += "<?xml version=\"1.0\" encoding=\"utf-8\"?>" + "\n";
-                xmlValue += "<ApplicationLog>" + "\n";
-                xmlValue += "    <Output>C:\\tmp\\</Output>" + "\n";
-                xmlValue += "    <Level>0</Level>" + "\n";
-                xmlValue += "</ApplicationLog>" + "\n";
+                xmlValue += "<Log>" + "\n";
+                xmlValue += "    <ApplicationLog>" + "\n";
+                xmlValue += "        <DirectoryPath>C:\\tmp\\</DirectoryPath>" + "\n";
+                xmlValue += "        <KeyName>Application</KeyName>" + "\n";
+                xmlValue += "        <FileName>Application.log</FileName>" + "\n";
+                xmlValue += "        <Level>0</Level>" + "\n";
+                xmlValue += "    </ApplicationLog>" + "\n";
+                xmlValue += "</Log>" + "\n";
 
                 byte[] byteStr = Encoding.Unicode.GetBytes(xmlValue);
                 fileStream.Write(byteStr, 0, byteStr.Length);
+            }
+        }
+
+        //Xml形式のコンフィグファイルを読み込む
+        private void LoadConfigFile()
+        {
+            //コンフィグファイルの読み込み
+            string logconfigFilePath = CreatePath(Environment.CurrentDirectory, logConfigFileName);
+            if (!File.Exists(logconfigFilePath))
+            {
+                //コンフィグファイルがなければデフォルト値で作成する
+                CreateConfigFile(logconfigFilePath);
+            }
+
+            //xmlファイルを取得
+            XElement xml = XElement.Load(logconfigFilePath);
+            //Log情報のタグ内の情報を取得する
+            IEnumerable<XElement> infos = from item in xml.Elements("Log") select item;
+            Dictionary<string, LogInfo> logInfos = new Dictionary<string, LogInfo>();
+            foreach (XElement info in infos)
+            {
+                try
+                {
+                    string _keyName = info.Element("KeyName").Value;
+                    string _fileName = info.Element("FileName").Value;
+                    string _directoryPath = info.Element("DirectoryPath").Value;
+                    int _logLevel = int.Parse(info.Element("Level").Value);
+                    LogInfo _logInfo = new LogInfo(_fileName, _directoryPath, _logLevel);
+                    logInfos.Add(_keyName, _logInfo);
+                }
+                catch
+                {
+                    continue;
+                }
             }
         }
 

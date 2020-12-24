@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 
-namespace UnitTestProject1.DLL
+namespace DLL.Test
 {
     [TestClass]
     public class LogManagerTest
@@ -35,13 +35,12 @@ namespace UnitTestProject1.DLL
         public void WriteApplicationLog_Normal01()
         {
             LogManager.WriteCallStack_In();
-
             LogManager.InfomationWriteApplicationLog("Info test");
+            LogManager.InfomationWriteApplicationLog("Info test", true);
             LogManager.ErrorWriteApplicationLog("Error test");
             LogManager.DebugWriteApplicationLog("Debug test");
             LogManager.WarningWriteApplicationLog("Warning test");
             LogManager.VerboseWriteApplicationLog("Verbose test");
-
             LogManager.WriteCallStack_Out();
         }
     }

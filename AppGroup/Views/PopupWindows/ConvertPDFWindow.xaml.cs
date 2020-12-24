@@ -1,5 +1,5 @@
-﻿using Microsoft.WindowsAPICodePack.Dialogs;
-using System;
+﻿using ConvertLib;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
@@ -166,7 +166,7 @@ namespace AppGroup.Views.PopupWindows
             //非同期
             Task<bool> task = Task.Run(() =>
             {
-                return CFLib.ConvertImage2PDF(list, this.m_ViewModel.SaveFolderPathText);
+                return PDFConvert.ConvertImage2PDF(list.Convert2Array(), this.m_ViewModel.SaveFolderPathText);
             });
 
             bool result = task.Result;

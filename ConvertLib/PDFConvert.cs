@@ -1,22 +1,23 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
+using System.Text;
 
-namespace UtilityLib
+namespace ConvertLib
 {
-    /// <summary>
-    /// ファイル変換系ライブラリ
-    /// </summary>
-    public static class CFLib
+    public class PDFConvert
     {
+        #region 画像 ⇒ PDF
         /// <summary>
         /// 複数画像を1枚のPDFに変換する.
         /// </summary>
-        /// <param name="inputFilePaths"></param>
-        /// <param name="outputFilePath"></param>
-        /// <returns></returns>
-        public static bool ConvertImage2PDF(List<string> inputFilePaths, string outputFilePath)
+        /// <param name="inputFilePaths">PDFに変換する画像パス</param>
+        /// <param name="outputFilePath">変換後のPDFの保存先</param>
+        /// <returns>成否</returns>
+        public static bool ConvertImage2PDF(string[] inputFilePaths, string outputFilePath)
         {
             bool result = true;
 
@@ -154,14 +155,14 @@ namespace UtilityLib
             try
             {
                 //出力先のパスにファイルがある場合は、先に消す 
-                if (System.IO.File.Exists(outputFilePath))
+                if (File.Exists(outputFilePath))
                 {
-                    System.IO.File.Delete(outputFilePath);
+                    File.Delete(outputFilePath);
                 }
 
                 //出力pdfバイナリの初期化
                 ary_pdf_file = new List<byte>();
-                ary_pdf_byte_head = new List<Int64>();
+                ary_pdf_byte_head = new List<long>();
 
                 //■ファイルを作成して書き込む
                 FileStream fs = new FileStream(outputFilePath, FileMode.Create, FileAccess.Write);
@@ -183,14 +184,14 @@ namespace UtilityLib
                 byte[] pdf_write_binary;
 
                 //ページ数だけ、子オブジェクトを指定・追加する
-                for (int i = 3; i <= (inputFilePaths.Count * 3); i += 3)
+                for (int i = 3; i <= (inputFilePaths.Length * 3); i += 3)
                 {
                     //各・子オブジェクトの開始番号を、格納
                     //Set start position of kids object No.  
                     string pdf_2nd_obj_Kids_Set = pdf_indicate_obj.Replace("NO", i.ToString());
 
                     //文字列を、バイト配列に変換して、格納する。  
-                    pdf_write_binary = System.Text.Encoding.ASCII.GetBytes(pdf_2nd_obj_Kids_Set);
+                    pdf_write_binary = Encoding.ASCII.GetBytes(pdf_2nd_obj_Kids_Set);
                     ary_pdf_file.AddRange(pdf_write_binary);
 
                     //配列を初期化  
@@ -199,7 +200,7 @@ namespace UtilityLib
 
                 //ページ数を格納する。  
                 ary_pdf_file.AddRange(pdf_2nd_obj_Count);
-                pdf_write_binary = System.Text.Encoding.ASCII.GetBytes(inputFilePaths.Count.ToString());
+                pdf_write_binary = Encoding.ASCII.GetBytes(inputFilePaths.Length.ToString());
                 ary_pdf_file.AddRange(pdf_write_binary);
 
                 //ヘッダーを閉める。  
@@ -211,11 +212,10 @@ namespace UtilityLib
 
                 try
                 {   //一旦、バイト型配列の内容をすべて上書き
-                    fs.Write((byte[])ary_pdf_file.ToArray(), 0, ary_pdf_file.Count);
+                    fs.Write(ary_pdf_file.ToArray(), 0, ary_pdf_file.Count);
                 }
                 catch
                 {
-
                 };
                 
                 //配列を、一旦、クリアする
@@ -223,7 +223,7 @@ namespace UtilityLib
 
                 //◆各ページ用の、子オブジェクトの作成
                 //ページ数だけ、子オブジェクトを指定・追加する
-                for (int i = 0; i < inputFilePaths.Count; i += 1)
+                for (int i = 0; i < inputFilePaths.Length; i += 1)
                 {
                     //▼まずは、今回の、子オブジェクトの番号を指定
                     Int32 obj_No = (i + 1) * 3;
@@ -233,7 +233,7 @@ namespace UtilityLib
                     ary_pdf_byte_head.Add(Convert.ToInt64(fs.Length));
 
                     //文字列を、バイト配列に変換して、バイナリに追加
-                    ary_pdf_file.AddRange(System.Text.Encoding.ASCII.GetBytes(pdf_obj_String));
+                    ary_pdf_file.AddRange(Encoding.ASCII.GetBytes(pdf_obj_String));
                     
                     //▼キャンバス・サイズを指定
                     ary_pdf_file.AddRange(pdf_3rd_obj_Start);
@@ -251,7 +251,7 @@ namespace UtilityLib
                         pdf_obj_String = pdf_obj_String.Replace("HH", Convert.ToSingle(bitmap.Height * 0.75).ToString());
 
                         //文字列を、バイト配列に変換して、バイナリに追加
-                        ary_pdf_file.AddRange(System.Text.Encoding.ASCII.GetBytes(pdf_obj_String));
+                        ary_pdf_file.AddRange(Encoding.ASCII.GetBytes(pdf_obj_String));
                         
                         //▼画像の配置指定の設定
                         ary_pdf_file.AddRange(pdf_3rd_obj_Resources);
@@ -259,7 +259,7 @@ namespace UtilityLib
                         pdf_obj_String = pdf_obj_String.Replace("XX", (obj_No + 1).ToString());
 
                         //文字列を、バイト配列に変換して、バイナリに追加
-                        ary_pdf_file.AddRange(System.Text.Encoding.ASCII.GetBytes(pdf_obj_String));
+                        ary_pdf_file.AddRange(Encoding.ASCII.GetBytes(pdf_obj_String));
                         
                         //▼画像の配置指定の設定2
                         ary_pdf_file.AddRange(pdf_3rd_obj_Contents);
@@ -267,7 +267,7 @@ namespace UtilityLib
                         pdf_obj_String = pdf_obj_String.Replace("NO", (obj_No + 2).ToString());
 
                         //文字列を、バイト配列に変換して、バイナリに追加
-                        ary_pdf_file.AddRange(System.Text.Encoding.ASCII.GetBytes(pdf_obj_String));
+                        ary_pdf_file.AddRange(Encoding.ASCII.GetBytes(pdf_obj_String));
                         ary_pdf_file.AddRange(pdf_3rd_obj_End);
                         
                         //▼画像配置の前のオブジェクト・バイナリ
@@ -276,7 +276,7 @@ namespace UtilityLib
                         ary_pdf_byte_head.Add(Convert.ToInt64(fs.Length + ary_pdf_file.Count));
 
                         pdf_obj_String = pdf_obj_Name.Replace("CC", (obj_No + 1).ToString());
-                        ary_pdf_file.AddRange(System.Text.Encoding.ASCII.GetBytes(pdf_obj_String));
+                        ary_pdf_file.AddRange(Encoding.ASCII.GetBytes(pdf_obj_String));
 
                         ary_pdf_file.AddRange(pdf_4th_obj_Start);
                         
@@ -284,25 +284,25 @@ namespace UtilityLib
                         pdf_obj_String = pdf_4th_obj_ImageSize;
                         pdf_obj_String = pdf_obj_String.Replace("AA", bitmap.Width.ToString());
                         pdf_obj_String = pdf_obj_String.Replace("BB", bitmap.Height.ToString());
-                        ary_pdf_file.AddRange(System.Text.Encoding.ASCII.GetBytes(pdf_obj_String));
+                        ary_pdf_file.AddRange(Encoding.ASCII.GetBytes(pdf_obj_String));
 
                         ary_pdf_file.AddRange(pdf_4th_obj_Filter);
 
                         //▼今回処理する画像をメモリに格納
                         //メモリに保存
                         var baos = new MemoryStream();
-                        bitmap.Save(baos, System.Drawing.Imaging.ImageFormat.Jpeg);
+                        bitmap.Save(baos, ImageFormat.Jpeg);
                         
                         //▼画像本体の、バイトサイズを指定
                         pdf_obj_String = pdf_4th_obj_Length;
                         pdf_obj_String = pdf_obj_String.Replace("LLLLL", baos.Length.ToString());
-                        ary_pdf_file.AddRange(System.Text.Encoding.ASCII.GetBytes(pdf_obj_String));
+                        ary_pdf_file.AddRange(Encoding.ASCII.GetBytes(pdf_obj_String));
 
 
                         //▼以下、jpg画像のバイナリを、挿入-----------------------------------------
                         //画像を、バイト配列に変換したものを、渡す
                         //画像のバイナリ取得
-                        ary_pdf_file.AddRange(((MemoryStream)baos).ToArray());
+                        ary_pdf_file.AddRange(baos.ToArray());
 
 
                         //streamを閉じる
@@ -315,7 +315,7 @@ namespace UtilityLib
                         ary_pdf_byte_head.Add(Convert.ToInt64(fs.Length + ary_pdf_file.Count));
 
                         pdf_obj_String = pdf_obj_Name.Replace("CC", (obj_No + 2).ToString());
-                        ary_pdf_file.AddRange(System.Text.Encoding.ASCII.GetBytes(pdf_obj_String));
+                        ary_pdf_file.AddRange(Encoding.ASCII.GetBytes(pdf_obj_String));
 
 
                         //▼画像の表示サイズの指定
@@ -324,10 +324,10 @@ namespace UtilityLib
                         pdf_obj_String = pdf_obj_String.Replace("HH", Convert.ToSingle(bitmap.Height * 0.75).ToString());
 
                         //とりあえず、stream内部のバイト数を、数えるために、pdf_write_binaryに、移しておく
-                        pdf_write_binary = System.Text.Encoding.ASCII.GetBytes(pdf_obj_String);
+                        pdf_write_binary = Encoding.ASCII.GetBytes(pdf_obj_String);
 
                         //stream内部のバイト数を格納
-                        ary_pdf_file.AddRange(System.Text.Encoding.ASCII.GetBytes(
+                        ary_pdf_file.AddRange(Encoding.ASCII.GetBytes(
                                 pdf_5th_obj_Length.Replace("LLLLL", pdf_write_binary.Length.ToString())));
 
                         //stream本体を格納
@@ -340,7 +340,7 @@ namespace UtilityLib
 
                         try
                         {   //一旦、バイト型配列の内容をすべて上書き
-                            fs.Write((byte[])ary_pdf_file.ToArray(), 0, ary_pdf_file.Count);
+                            fs.Write(ary_pdf_file.ToArray(), 0, ary_pdf_file.Count);
                         }
                         catch
                         {
@@ -356,13 +356,13 @@ namespace UtilityLib
 
                 //▼フッター  
                 //xrefの開始バイト位置を格納  
-                Int64 xref_start_pos = fs.Length;
+                long xref_start_pos = fs.Length;
 
                 //フッターの開始。まずは、xrefから。
                 ary_pdf_file.AddRange(pdf_xref_Start);
 
                 //全オブジェクト数を格納  
-                ary_pdf_file.AddRange(System.Text.Encoding.ASCII.GetBytes(
+                ary_pdf_file.AddRange(Encoding.ASCII.GetBytes(
                             pdf_xref_objCount.Replace("MM", (ary_pdf_byte_head.Count + 1).ToString())));
 
                 //0位置指定。  
@@ -374,20 +374,20 @@ namespace UtilityLib
                     string fff = pdf_xref_objStartPos;
                     //開始位置のバイト数は、10桁表示→つまり、PDFの最大サイズは、10GB程度？  
                     fff = fff.Replace("QQQQQQQQQQ", Convert.ToUInt64(ary_pdf_byte_head[i]).ToString("0000000000"));
-                    ary_pdf_file.AddRange(System.Text.Encoding.ASCII.GetBytes(fff));
+                    ary_pdf_file.AddRange(Encoding.ASCII.GetBytes(fff));
                 }
 
                 //trailerを格納 / Add trailer.  
-                ary_pdf_file.AddRange(System.Text.Encoding.ASCII.GetBytes(
+                ary_pdf_file.AddRange(Encoding.ASCII.GetBytes(
                             pdf_trailer.Replace("MM", (ary_pdf_byte_head.Count + 1).ToString())));
 
                 //startxref～%%EOFを格納  
-                ary_pdf_file.AddRange(System.Text.Encoding.ASCII.GetBytes(
+                ary_pdf_file.AddRange(Encoding.ASCII.GetBytes(
                             pdf_startxref_EOF.Replace("TTT", xref_start_pos.ToString())));
 
                 try
                 {   //一旦、バイト型配列の内容をすべて上書き   
-                    fs.Write((byte[])ary_pdf_file.ToArray(), 0, ary_pdf_file.Count);
+                    fs.Write(ary_pdf_file.ToArray(), 0, ary_pdf_file.Count);
                 }
                 catch
                 {
@@ -412,36 +412,71 @@ namespace UtilityLib
 
             return result;
         }
+        #endregion
 
+        #region PDF ⇒ 画像
         /// <summary>
-        /// 1枚の画像をPDFに変換する
+        /// PDFを複数画像に変換する.
         /// </summary>
-        /// <param name="inputFilePath"></param>
-        /// <param name="outputFilePath"></param>
-        /// <returns></returns>
-        public static bool ConvertImage2PDF(string inputFilePath, string outputFilePath)
+        /// <param name="inputFilePath">画像に変換するPDFパス</param>
+        /// <param name="outputDirectory">変換した画像の保存先</param>
+        /// <returns>成否</returns>
+        public static bool ConvertPDF2Image(string inputFilePath, string outputDirectory)
         {
             bool result = true;
 
-            List<string> inputFilePaths = new List<string>();
-            inputFilePaths.Add(inputFilePath);
-
-            result = ConvertImage2PDF(inputFilePaths, outputFilePath);
-
+            try
+            {
+                Image[] images = { };
+                ConvertPDF2Image(inputFilePath, ref images);
+                SaveImages(images, outputDirectory, inputFilePath);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message); //Debug用
+                result = false;
+            }
+            
             return result;
         }
 
-        /// <summary>
-        /// 画像の色合いを反転させる
-        /// </summary>
-        /// <param name="inputFilePath"></param>
-        /// <param name="outputFilePath"></param>
-        /// <returns></returns>
-        public static bool ReverseColor(string inputFilePath, string outputFilePath)
+        private static void ConvertPDF2Image(string inputFilePath, ref Image[] outputImages)
         {
-            bool result = false;
+            List<Image> tmpImages = new List<Image>();
 
-            return result;
+            //変換処理
+            using (FileStream fs = new FileStream(inputFilePath, FileMode.Open))
+            {
+                var image = Image.FromStream(fs);
+                var guid = image.FrameDimensionsList[0];
+                var frameDimension = new FrameDimension(guid);
+                int pageCount = image.GetFrameCount(frameDimension);
+                for (int i = 0; i < pageCount; i++)
+                {
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        image.SelectActiveFrame(frameDimension, i);
+                        tmpImages.Add(image);
+                    }
+                }
+            }
+            //結果を格納
+            outputImages = tmpImages.ToArray();
         }
+
+        private static void SaveImages(Image[] images, string saveDirectoryPath, string originalFilePath)
+        {
+            //元PDFファイル名を取得する
+            string originalFileName = Path.GetFileNameWithoutExtension(originalFilePath);
+
+            for (int i = 0; i < images.Length; i++)
+            {
+                //ファイル名を生成
+                string fileName = originalFileName + $"_{i:000}" + ".png";
+                string saveFilePath = saveDirectoryPath + fileName;
+                images[i].Save(saveFilePath, ImageFormat.Png);
+            }
+        }
+        #endregion
     }
 }

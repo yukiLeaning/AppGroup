@@ -228,6 +228,10 @@
     <None Include="Bat\DeleteFolder.bat" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ConvertLib\ConvertLib.csproj">
+      <Project>{cf05c50f-749b-4a62-b9e6-bc9b8a6c69d9}</Project>
+      <Name>ConvertLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FileFolderOperationLib\UtilityLib.csproj">
       <Project>{19405ebc-d490-4327-882a-93172c57f189}</Project>
       <Name>UtilityLib</Name>

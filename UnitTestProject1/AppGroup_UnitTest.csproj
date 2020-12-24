@@ -71,6 +71,7 @@
     <Compile Include="Bat\DeleteFolder_Test.cs" />
     <Compile Include="Bat\CopyFolder_Test.cs" />
     <Compile Include="DLL\LogLibTest.cs" />
+    <Compile Include="DLL\ConvertLibTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UtilityLib\FFOLib_Test.cs" />
   </ItemGroup>
@@ -88,6 +89,10 @@
     <ProjectReference Include="..\AppGroup\AppGroup.csproj">
       <Project>{bc1f01e8-ab69-48fd-88a5-00ba8638dfba}</Project>
       <Name>AppGroup</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ConvertLib\ConvertLib.csproj">
+      <Project>{cf05c50f-749b-4a62-b9e6-bc9b8a6c69d9}</Project>
+      <Name>ConvertLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\FileFolderOperationLib\UtilityLib.csproj">
       <Project>{19405ebc-d490-4327-882a-93172c57f189}</Project>
