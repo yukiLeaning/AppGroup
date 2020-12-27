@@ -86,9 +86,9 @@
     <Folder Include="Views\UserControls\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AppGroup\AppGroup.csproj">
+    <ProjectReference Include="..\AppGroup\Bloom.csproj">
       <Project>{bc1f01e8-ab69-48fd-88a5-00ba8638dfba}</Project>
-      <Name>AppGroup</Name>
+      <Name>Bloom</Name>
     </ProjectReference>
     <ProjectReference Include="..\ConvertLib\ConvertLib.csproj">
       <Project>{cf05c50f-749b-4a62-b9e6-bc9b8a6c69d9}</Project>

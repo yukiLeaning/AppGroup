@@ -1,0 +1,53 @@
+﻿<Window x:Class="Bloom.Views.PopupWindows.FileEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Bloom.Views.PopupWindows"
+        mc:Ignorable="d"
+        Title="FileEditWindow" MinHeight="100" Width="300"
+        SizeToContent="Height"
+        Closing="Window_Closing"
+        AllowDrop="True"
+        PreviewDragOver="Window_PreviewDragOver"
+        Drop="Window_Drop">
+    <Window.Resources>
+        <SolidColorBrush x:Key="BackColor" Color="#FFC9DDF5"/>
+    </Window.Resources>
+    <Grid>
+        <Border
+            x:Name="m_SelectArea"
+            Grid.Row="0"
+            Grid.Column="0"
+            Height="300"
+            Margin="5"
+            Visibility="Collapsed"
+            BorderBrush="#FF747272"
+            BorderThickness="1" CornerRadius="5">
+            <StackPanel
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Opacity="0.3">
+                <Label
+                    Content="ファイル/フィルダを"
+                    FontSize="{StaticResource M_TextSize}"
+                    FontFamily="{StaticResource MainFont}"
+                    HorizontalContentAlignment="Center"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"/>
+                <Label
+                    Content="ドラッグ＆ドロップ"
+                    FontSize="{StaticResource M_TextSize}"
+                    FontFamily="{StaticResource MainFont}"
+                    HorizontalContentAlignment="Center"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+        <Grid
+            x:Name="m_EditArea"
+            Visibility="Visible"
+            Margin="0,5">
+        </Grid>
+    </Grid>
+</Window>

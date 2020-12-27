@@ -1,0 +1,174 @@
+﻿<Window x:Class="Bloom.Views.PopupWindows.ConvertPDFWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Bloom.Views.PopupWindows"
+        xmlns:common="clr-namespace:Bloom.Views.UserControls.Common"
+        mc:Ignorable="d"
+        Title="ConvertPDFWindow" Height="530" Width="400"
+        Closing="Window_Closing">
+    <Window.DataContext>
+        <local:ConvertPDFWindow_ViewModel/>
+    </Window.DataContext>
+    
+    <Grid
+        Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="70"/>
+        </Grid.RowDefinitions>
+        <!-- ListBox layer -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <!-- Select target file layer -->
+        <Grid
+            Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <Grid
+                Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="25"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <ListBox
+                    x:Name="m_ImagesListBox"
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    Grid.RowSpan="2"
+                    DragDrop.DragEnter="ImagesListBox_DragEnter"
+                    DragDrop.DragLeave="ImagesListBox_DragLeave"
+                    DragDrop.DragOver="ImagesListBox_DragOver"
+                    DragDrop.Drop="ImagesListBox_Drop"
+                    AllowDrop="True"
+                    SelectedIndex="{Binding SelectingListBoxItemNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button
+                    x:Name="SelectButton_Up"
+                    Grid.Column="1"
+                    Grid.Row="0"
+                    Content="▲"
+                    IsEnabled="{Binding IsEnableSelectButton, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Click="SelectButton_Up_Click"/>
+                <Button
+                    x:Name="SelectButton_Down"
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    Content="▼"
+                    IsEnabled="{Binding IsEnableSelectButton, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Click="SelectButton_Down_Click"/>
+            </Grid>
+            <Grid
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="10,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+                <TextBox
+                    x:Name="m_InputFolderPath_TextBox"
+                    Grid.Column="0"
+                    Height="20"
+                    Text="{Binding FolderPathText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button
+                    x:Name="SelectFileButton"
+                    Grid.Column="1"
+                    Height="20"
+                    Content="ファイル"
+                    Click="SelectFileButton_Click"/>
+                <Button
+                    x:Name="SelectFolderButton"
+                    Grid.Column="2"
+                    Height="20"
+                    Content="フォルダ"
+                    Click="SelectFolderButton_Click"/>
+            </Grid>
+            <StackPanel
+                Grid.Row="2"
+                Orientation="Horizontal"
+                HorizontalAlignment="Center">
+                <Button
+                    x:Name="m_AddButton"
+                    Width="75"
+                    Height="30"
+                    Content="追加"
+                    Click="AddButton_Click"/>
+                <Button
+                    x:Name="m_DeleteButton"
+                    Width="75"
+                    Height="30"
+                    Content="削除"
+                    Click="DeleteButton_Click"/>
+            </StackPanel>
+        </Grid>
+        <!-- Select resolution layer -->
+        <Grid
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2">
+            <StackPanel
+                Orientation="Horizontal"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+                <RadioButton Name="low" GroupName="x" Margin="10,0" Content="Low"/>
+                <RadioButton Name="middle" GroupName="x" Margin="10,0" Content="Middle"/>
+                <RadioButton Name="high" GroupName="x" Margin="10,0" Content="High"/>
+                <RadioButton Name="original" GroupName="x" Margin="10,0" Content="Original"/>
+            </StackPanel>
+        </Grid>
+        <!-- Select save file layer -->
+        <Grid
+            Grid.Row="2"
+            Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid
+                Grid.Row="0"
+                Grid.Column="0"
+                Margin="10,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+                <TextBox
+                    x:Name="m_outPutFolderPath_TextBox"
+                    Height="20"
+                    Text="{Binding SaveFolderPathText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button
+                    x:Name="m_SaveFileSelectButton"
+                    Grid.Column="1"
+                    Height="20"
+                    Content="ファイル"
+                    Click="SaveFileSelectButton_Click"/>
+            </Grid>
+            <StackPanel
+                Grid.Row="1"
+                Orientation="Horizontal"
+                HorizontalAlignment="Center">
+                <Button
+                    x:Name="m_ConvertButton"
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Width="70"
+                    Height="30"
+                    Content="変換"
+                    IsEnabled="{Binding IsEnableConvertButton, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
+                    Click="ConvertButton_Click"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
