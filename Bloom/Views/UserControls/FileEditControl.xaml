@@ -11,7 +11,7 @@
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="120"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -23,13 +23,12 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="45"/>
         </Grid.RowDefinitions>
         <!--背景-->
-        <Rectangle Grid.Row="1" Grid.ColumnSpan="2" Fill="{StaticResource BackColor}"/>
-        <Rectangle Grid.Row="3" Grid.ColumnSpan="2" Fill="{StaticResource BackColor}"/>
-        <Rectangle Grid.Row="5" Grid.ColumnSpan="2" Fill="{StaticResource BackColor}"/>
-        <Rectangle Grid.Row="7" Grid.ColumnSpan="2" Fill="{StaticResource BackColor}"/>
+        <Rectangle Grid.Row="0" Grid.ColumnSpan="2" Fill="{StaticResource BackColor}"/>
+        <Rectangle Grid.Row="2" Grid.ColumnSpan="2" Fill="{StaticResource BackColor}"/>
+        <Rectangle Grid.Row="4" Grid.ColumnSpan="2" Fill="{StaticResource BackColor}"/>
+        <Rectangle Grid.Row="6" Grid.ColumnSpan="2" Fill="{StaticResource BackColor}"/>
         <!-- ファイル名 -->
         <Label
             x:Name="m_Label1"
@@ -48,7 +47,8 @@
             FontFamily="{StaticResource MainFont}"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Center"
-            Background="Transparent"/>
+            Background="Transparent"
+            Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <!-- ファイル名 -->
         <Label
             x:Name="m_Label2"
@@ -67,7 +67,8 @@
             FontFamily="{StaticResource MainFont}"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Center"
-            Background="Transparent"/>
+            Background="Transparent"
+            Text="{Binding FullName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <!-- ファイルサイズ -->
         <Label
             x:Name="m_Label3"
@@ -86,7 +87,8 @@
             FontFamily="{StaticResource MainFont}"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Center"
-            Background="Transparent"/>
+            Background="Transparent"
+            Text="{Binding Size, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <!-- 作成日 -->
         <Label
             x:Name="m_Label4"
@@ -105,7 +107,8 @@
             FontFamily="{StaticResource MainFont}"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Center"
-            Background="Transparent"/>
+            Background="Transparent"
+            Text="{Binding CreateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <!-- 更新日 -->
         <Label
             x:Name="m_Label5"
@@ -124,7 +127,8 @@
             FontFamily="{StaticResource MainFont}"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Center"
-            Background="Transparent"/>
+            Background="Transparent"
+            Text="{Binding UpdateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <!-- 所有者 -->
         <Label
             x:Name="m_Label6"
@@ -143,7 +147,8 @@
             FontFamily="{StaticResource MainFont}"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Center"
-            Background="Transparent"/>
+            Background="Transparent"
+            Text="{Binding Owner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <!-- 作成時のファイル名 -->
         <Label
             x:Name="m_Label7"
@@ -162,7 +167,8 @@
             FontFamily="{StaticResource MainFont}"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Center"
-            Background="Transparent"/>
+            Background="Transparent"
+            Text="{Binding OriginalName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <!-- ファイル属性 -->
         <Label
             x:Name="m_Label8"
@@ -181,6 +187,7 @@
             FontFamily="{StaticResource MainFont}"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Center"
-            Background="Transparent"/>
+            Background="Transparent"
+            Text="{Binding Attributes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </UserControl>

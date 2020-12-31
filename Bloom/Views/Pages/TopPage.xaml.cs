@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Bloom.Framework;
 using Bloom.Properties;
+using System.Windows.Input;
 
 namespace Bloom.Views.Pages
 {
@@ -55,6 +56,26 @@ namespace Bloom.Views.Pages
         {
             this.InitializeComponent();
             this.InitializeWindowMap();
+            
+            //ドラッグイベントを登録
+            this.SystemHeader.PreviewMouseLeftButtonDown += (s, e) => 
+            {
+                Window parentWindow = (Window)this.Parent;
+                if ((parentWindow != null) && (e.LeftButton == MouseButtonState.Pressed))
+                {
+                    parentWindow.DragMove();
+                }
+            };
+        }
+
+        /// <summary>
+        /// デストラクタ
+        /// </summary>
+        ~TopPage()
+        {
+            //追加したイベントを削除
+            Window parentWindow = (Window)this.Parent;
+            this.SystemHeader.PreviewMouseLeftButtonDown -= (s, e) => parentWindow.DragMove();
         }
 
         /// <summary>
@@ -111,7 +132,8 @@ namespace Bloom.Views.Pages
         /// <returns></returns>
         private void Open_Window(Window window)
         {
-            window.Owner = (Window)this.Parent;
+            Window parentWindow = (Window)this.Parent;
+            window.Owner = parentWindow;
             window.Left = window.Owner.Left;
             window.Top = window.Owner.Top;
 
@@ -173,6 +195,42 @@ namespace Bloom.Views.Pages
                 value.Value.window.Close();
             }
             this.m_WindowMap.Clear();
+        }
+
+        /// <summary>
+        /// 最小化ボタン押下イベントハンドラ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MinimizeButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        
+        /// <summary>
+        /// リサイズボタン押下イベントハンドラ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ResizeButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// 閉じるボタン押下イベントイベントハンドラ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Window parentWindow = (Window)this.Parent;
+            parentWindow.Close();
+        }
+        
+        private void MenuButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
         #endregion 変更不要
     }

@@ -19,9 +19,11 @@
             x:Name="m_SelectArea"
             Grid.Row="0"
             Grid.Column="0"
-            Height="300"
+            MinHeight="200"
+            VerticalAlignment="Stretch"
+            HorizontalAlignment="Stretch"
             Margin="5"
-            Visibility="Collapsed"
+            Visibility="Visible"
             BorderBrush="#FF747272"
             BorderThickness="1" CornerRadius="5">
             <StackPanel
@@ -46,8 +48,29 @@
         </Border>
         <Grid
             x:Name="m_EditArea"
-            Visibility="Visible"
+            Visibility="Collapsed"
             Margin="0,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="45"/>
+            </Grid.RowDefinitions>
+            <TabControl
+                x:Name="m_FileInfoTab"
+                Grid.Row="0"
+                Grid.Column="0" Grid.ColumnSpan="2">
+            </TabControl>
+            <Button
+                x:Name="m_ClearButton"
+                Grid.Column="1"
+                Grid.Row="1"
+                Width="100"
+                Height="25"
+                Content="クリア"
+                Click="ClearButton_Click"/>
         </Grid>
     </Grid>
 </Window>

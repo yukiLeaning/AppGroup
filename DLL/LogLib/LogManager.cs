@@ -6,7 +6,7 @@ using System.Text;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace LogLib
+namespace DLL.LogLib
 {
     public class LogManager
     {

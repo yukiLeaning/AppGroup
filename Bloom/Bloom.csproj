@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{BC1F01E8-AB69-48FD-88A5-00BA8638DFBA}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>AppGroup</RootNamespace>
-    <AssemblyName>AppGroup</AssemblyName>
+    <RootNamespace>Bloom</RootNamespace>
+    <AssemblyName>Bloom</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -79,8 +79,8 @@
     <Compile Include="Framework\Enumeration.cs" />
     <Compile Include="Framework\ResourceManagers.cs" />
     <Compile Include="Models\CCopyFolederConfigurationModel.cs" />
+    <Compile Include="Models\CFileEditModel.cs" />
     <Compile Include="Models\IModel.cs" />
-    <Compile Include="Models\EModel.cs" />
     <Compile Include="Models\AModel.cs" />
     <Compile Include="Models\CModelFactory.cs" />
     <Compile Include="Models\CResourceMonitorModel.cs" />
@@ -243,22 +243,29 @@
     <None Include="Bat\DeleteFolder.bat" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ConvertLib\ConvertLib.csproj">
+    <Resource Include="Images\矢印アイコン_上.png" />
+    <Resource Include="Images\矢印アイコン_下.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DLL\ConvertLib\ConvertLib.csproj">
       <Project>{cf05c50f-749b-4a62-b9e6-bc9b8a6c69d9}</Project>
       <Name>ConvertLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FileFolderOperationLib\UtilityLib.csproj">
+    <ProjectReference Include="..\DLL\FileFolderOperationLib\UtilityLib.csproj">
       <Project>{19405ebc-d490-4327-882a-93172c57f189}</Project>
       <Name>UtilityLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LogLib\LogLib.csproj">
+    <ProjectReference Include="..\DLL\FileLib\FileLib.csproj">
+      <Project>{b5936808-7891-4cd6-87d1-de60d631395b}</Project>
+      <Name>FileLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\LogLib\LogLib.csproj">
       <Project>{1e5f0c84-d46c-4eb4-b8c9-4d0eafc1f62e}</Project>
       <Name>LogLib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\矢印アイコン_上.png" />
-    <Resource Include="Images\矢印アイコン_下.png" />
+    <Resource Include="Images\ハンバーガーアイコン.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,19 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Bloom.DataObjects;
 
 namespace Bloom.Views.UserControls
 {
@@ -127,8 +116,8 @@ namespace Bloom.Views.UserControls
             }
         }
 
-        private FileAttributes _Attributes;
-        public FileAttributes Attributes
+        private string _Attributes;
+        public string Attributes
         {
             get { return this._Attributes; }
             set
@@ -154,9 +143,51 @@ namespace Bloom.Views.UserControls
     /// </summary>
     public partial class FileEditControl : UserControl
     {
+        FileEditControl_ViewModel viewModel = new FileEditControl_ViewModel();
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         public FileEditControl()
         {
-            InitializeComponent();
+            this.InitializeComponent();
+            this.DataContext = this.viewModel;
+        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fileInfo"></param>
+        public void SetFileInfomation(SFileInfo fileInfo)
+        {
+            this.viewModel.Name = fileInfo.Name;
+            this.viewModel.FullName = fileInfo.FullName;
+            this.viewModel.Size = fileInfo.Size;
+            this.viewModel.CreateTime = fileInfo.CreateTime;
+            this.viewModel.UpdateTime = fileInfo.UpdateTime;
+            this.viewModel.Owner = fileInfo.Owner;
+            this.viewModel.OriginalName = fileInfo.OriginalName;
+            this.viewModel.Attributes = fileInfo.Attributes;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public SFileInfo GetFileInfo()
+        {
+            SFileInfo fileInfo = new SFileInfo()
+            {
+                Name = this.viewModel.Name,
+                FullName = this.viewModel.FullName,
+                Size = this.viewModel.Size,
+                CreateTime = this.viewModel.CreateTime,
+                UpdateTime = this.viewModel.UpdateTime,
+                Owner = this.viewModel.Owner,
+                OriginalName = this.viewModel.OriginalName,
+                Attributes = this.viewModel.Attributes
+            };
+            return fileInfo;
         }
     }
 }

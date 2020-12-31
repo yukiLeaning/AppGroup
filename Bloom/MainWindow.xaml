@@ -6,8 +6,12 @@
         xmlns:local="clr-namespace:Bloom"
         mc:Ignorable="d"
         Title="MainWindow" 
-        Height="500" Width="300"
-        MaxWidth="300" MinWidth="300"
+        Height="500" Width="900"
+        MinWidth="300"
+        WindowStyle="None"
+        ResizeMode="CanResizeWithGrip"
+        AllowsTransparency="True"
+        Background="White"
         Loaded="Window_Loaded"
         Unloaded="Window_Unloaded">
 </Window>

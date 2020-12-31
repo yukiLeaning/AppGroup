@@ -6,7 +6,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Text;
 
-namespace ConvertLib
+namespace DLL.ConvertLib
 {
     public class PDFConvert
     {

@@ -5,25 +5,178 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Bloom.Views.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="500" d:DesignWidth="300"
+      d:DesignHeight="500" d:DesignWidth="900"
       Title="TopPage"
       Loaded="Page_Loaded"
       Unloaded="Page_Unloaded">
-
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Bloom;component/Resources/ImageResource.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="SystemButtonStyle" TargetType="{x:Type Button}">
+                <Setter Property="OverridesDefaultStyle" Value="True"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="FontFamily" Value="Marlett"/>
+                <Setter Property="IsTabStop" Value="False"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Margin" Value="2"/>
+                <Setter Property="Padding" Value="1"/>
+                <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border x:Name="border" Background="Transparent" SnapsToDevicePixels="True">
+                                <Border.Effect>
+                                    <DropShadowEffect Opacity="0"/>
+                                </Border.Effect>
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal">
+                                            <Storyboard>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="border">
+                                                    <EasingDoubleKeyFrame KeyTime="0" Value="0.6"/>
+                                                </DoubleAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="MouseOver">
+                                            <Storyboard>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="border">
+                                                    <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                                                </DoubleAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <Storyboard>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="border">
+                                                    <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                                                </DoubleAnimationUsingKeyFrames>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.ShadowDepth)" Storyboard.TargetName="border">
+                                                    <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                                                </DoubleAnimationUsingKeyFrames>
+                                                <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Color)" Storyboard.TargetName="border">
+                                                    <EasingColorKeyFrame KeyTime="0" Value="Black"/>
+                                                </ColorAnimationUsingKeyFrames>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Opacity)" Storyboard.TargetName="border">
+                                                    <EasingDoubleKeyFrame KeyTime="0" Value="0.6"/>
+                                                </DoubleAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Disabled"/>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <ContentPresenter 
+                                    x:Name="contentPresenter" 
+                                    Focusable="False" 
+                                    Margin="{TemplateBinding Padding}"
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            </Style>
+            <ControlTemplate x:Key="NoBoderButton" TargetType="{x:Type Button}">
+                <Border
+                    x:Name="border"
+                    CornerRadius="5">
+                    <ContentPresenter
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+                </Border>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter TargetName="border" Property="Background" Value="#7FBBDAFF"/>
+                    </Trigger>
+                    <Trigger Property="IsPressed" Value="True">
+                        <Setter TargetName="border" Property="Background" Value="#B2AFD3FF"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+        </ResourceDictionary>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="70"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <!-- System Header -->
+        <Grid
+            Grid.Row="0"
+            Grid.Column="0" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="25"/>
+                <ColumnDefinition Width="25"/>
+                <ColumnDefinition Width="25"/>
+            </Grid.ColumnDefinitions>
+            <Rectangle
+                x:Name="SystemHeader"
+                Fill="Transparent"/>
+            <Button
+                Grid.Column="1"
+                Content="0"
+                Style="{DynamicResource SystemButtonStyle}"
+                Click="MinimizeButton_Click"/>
+            <Button
+                Grid.Column="2"
+                Content="1"
+                Style="{DynamicResource SystemButtonStyle}"
+                Click="ResizeButton_Click"/>
+            <Button
+                Grid.Column="3"
+                Content="r"
+                Style="{DynamicResource SystemButtonStyle}"
+                Click="CloseButton_Click"/>
+        </Grid>
+        
         <!-- Header -->
-        <!-- TBD -->
-        <Grid Grid.Row="0"/>
+        <Grid
+            x:Name="m_LeftHeader"
+            Grid.Row="1"
+            Grid.Column="0">
+            <!-- アイコン -->
+            <Grid
+                Grid.Row="0"
+                Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button
+                    x:Name="m_MenuButton"
+                    Grid.Column="0"
+                    Click="MenuButton_Click"
+                    Template="{DynamicResource NoBoderButton}">
+                    <Image Margin="5" Source="{StaticResource hamburgerIcon}"/>
+                </Button>
+                <Button
+                    x:Name="m_MainIcon"
+                    Grid.Column="1"
+                    FontSize="{StaticResource L_TextSize}"
+                    FontFamily="{StaticResource MainFont}"
+                    Template="{DynamicResource NoBoderButton}"
+                    Content="Bloom">
+                </Button>
+            </Grid>
+        </Grid>
+        
+        <!-- SideBar -->
         
         <!-- Body -->
         <WrapPanel 
             x:Name="SelectArea"
-            Grid.Row="1" 
-            Orientation="Vertical">
+            Grid.Row="2" 
+            Grid.Column="1"
+            Orientation="Vertical"
+            Margin="2">
         </WrapPanel>
     </Grid>
 </Page>

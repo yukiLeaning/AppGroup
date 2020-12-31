@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
+using Bloom.DataObjects;
+using Bloom.Models;
+using Bloom.Views.UserControls;
 
 namespace Bloom.Views.PopupWindows
 {
@@ -24,6 +28,7 @@ namespace Bloom.Views.PopupWindows
         }
 
         Dictionary<ViewArea, FrameworkElement> areaTable = new Dictionary<ViewArea, FrameworkElement>();
+        CFileEditModel fileEditModel;
 
         /// <summary>
         /// コンストラクタ
@@ -32,6 +37,8 @@ namespace Bloom.Views.PopupWindows
         {
             this.InitializeComponent();
             this.InitializeViewAreaTable();
+
+            this.fileEditModel = CModelFactory.GetInstnace().GetModel(EModel.FileEditModel) as CFileEditModel;
         }
 
         /// <summary>
@@ -42,6 +49,15 @@ namespace Bloom.Views.PopupWindows
             /* ViewAreaを追加した場合は、Addする */
             this.areaTable.Add(ViewArea.SelectArea, this.m_SelectArea);
             this.areaTable.Add(ViewArea.EditArea, this.m_EditArea);
+        }
+
+        /// <summary>
+        /// Viewの初期化
+        /// </summary>
+        private void InitializeView()
+        {
+            this.m_FileInfoTab.Items.Clear();
+            this.ChangeVisibleViewArea(ViewArea.SelectArea);
         }
 
         /// <summary>
@@ -75,11 +91,25 @@ namespace Bloom.Views.PopupWindows
         private void Window_Drop(object sender, DragEventArgs e)
         {
             var dropObjects = e.Data.GetData(DataFormats.FileDrop) as string[];
-            if (dropObjects.Length.Equals(0))
+            if (dropObjects.Length.Equals(0)) return;
+
+            this.m_FileInfoTab.Items.Clear(); //念の為初期化
+            foreach(var value in dropObjects)
             {
-                return;
+                //ファイル情報取得
+                SFileInfo? fileInfo = fileEditModel.GetFileInfo(value);
+                if (!fileInfo.HasValue) continue;
+                //ファイル編集コントロールを作成
+                FileEditControl fileEditControl = new FileEditControl();
+                fileEditControl.SetFileInfomation(fileInfo.Value);
+                //TabItemを作成
+                TabItem tabItem = new TabItem();
+                tabItem.Header = fileInfo.Value.Name;
+                tabItem.Content = fileEditControl;
+
+                this.m_FileInfoTab.Items.Add(tabItem);
             }
-            
+
             //ViewAreaを切り替え
             this.ChangeVisibleViewArea(ViewArea.EditArea);
         }
@@ -87,11 +117,17 @@ namespace Bloom.Views.PopupWindows
         //これどうにかしたい
         private void Window_Closing(object sender, CancelEventArgs e)
         {
+            this.InitializeView();
             if (this.IsActive)
             {
                 e.Cancel = true;
                 this.Visibility = Visibility.Collapsed;
             }
+        }
+        
+        private void ClearButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.InitializeView();
         }
         #endregion
     }

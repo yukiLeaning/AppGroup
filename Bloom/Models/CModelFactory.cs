@@ -6,6 +6,14 @@ using System.Threading.Tasks;
 
 namespace Bloom.Models
 {
+    public enum EModel : int
+    {
+        CopyFolderModel, 
+        DeleteObjectModel,
+        ResourceMonitorModel,
+        FileEditModel
+    }
+
     class CModelFactory
     {
         // メンバ変数
@@ -64,6 +72,7 @@ namespace Bloom.Models
             modelTable.Add(EModel.CopyFolderModel,      new CCopyFolederConfigurationModel());
             modelTable.Add(EModel.DeleteObjectModel,    new CDeleteObjectModel());
             modelTable.Add(EModel.ResourceMonitorModel, new CResourceMonitorModel());
+            modelTable.Add(EModel.FileEditModel,        new CFileEditModel());
         }
     }
 }

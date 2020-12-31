@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace UtilityLib
+namespace DLL.UtilityLib
 {
     /// <summary>
     /// ファイル操作系ライブラリ

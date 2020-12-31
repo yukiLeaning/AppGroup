@@ -1,5 +1,6 @@
 ﻿using Bloom.Views.Pages;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Bloom
 {
@@ -33,7 +34,8 @@ namespace Bloom
         /// <param name="e"></param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            this.AddChild(new TopPage());
+            Page page = new TopPage();
+            this.AddChild(page);
         }
 
         /// <summary>

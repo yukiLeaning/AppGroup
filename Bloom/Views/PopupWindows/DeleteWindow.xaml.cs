@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Bloom.Models;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
-using UtilityLib;
-using Bloom.Models;
-using Bloom.Framework;
 
 namespace Bloom.Views.PopupWindows
 {
@@ -26,16 +23,16 @@ namespace Bloom.Views.PopupWindows
     public partial class DeleteWindow : Window
     {
         private DeleteWindow_ViewModel m_ViewModel;
-        private CDeleteObjectModel modelFactory;
+        private CDeleteObjectModel deleteModel;
         
         /// <summary>
         /// コンストラクタ
         /// </summary>
         public DeleteWindow()
         {
-            modelFactory = CModelFactory.GetInstnace().GetModel(EModel.DeleteObjectModel) as CDeleteObjectModel;
+            this.deleteModel = CModelFactory.GetInstnace().GetModel(EModel.DeleteObjectModel) as CDeleteObjectModel;
 
-            InitializeComponent();
+            this.InitializeComponent();
             this.InitializeViewModel();
 
             //イベント登録
@@ -99,7 +96,7 @@ namespace Bloom.Views.PopupWindows
                 string errorMessage = string.Empty;
                 try
                 {
-                    modelFactory.DeleteObject(dropObjects);
+                    this.deleteModel.DeleteObject(dropObjects);
                 }
                 catch
                 {

@@ -8,4 +8,5 @@
     <BitmapImage x:Key="leftIcon" UriSource="/Bloom;component/Images/矢印アイコン_左.png"/>
     <BitmapImage x:Key="homeIcon" UriSource="/Bloom;component/Images/家アイコン.png"/>
     <BitmapImage x:Key="gearIcon" UriSource="/Bloom;component/Images/歯車アイコン.png"/>
+    <BitmapImage x:Key="hamburgerIcon" UriSource="/Bloom;component/Images/ハンバーガーアイコン.png"/>
 </ResourceDictionary>

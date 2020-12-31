@@ -1,4 +1,4 @@
-﻿using LogLib;
+﻿using DLL.LogLib;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;

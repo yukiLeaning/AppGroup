@@ -8,8 +8,8 @@
     <ProjectGuid>{7325CCB0-AA8B-4EA2-A9EA-6BE41565B35D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UnitTestProject1</RootNamespace>
-    <AssemblyName>UnitTestProject1</AssemblyName>
+    <RootNamespace>Bloom_UnitTest</RootNamespace>
+    <AssemblyName>Bloom_UnitTest</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -90,15 +90,19 @@
       <Project>{bc1f01e8-ab69-48fd-88a5-00ba8638dfba}</Project>
       <Name>Bloom</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ConvertLib\ConvertLib.csproj">
+    <ProjectReference Include="..\DLL\ConvertLib\ConvertLib.csproj">
       <Project>{cf05c50f-749b-4a62-b9e6-bc9b8a6c69d9}</Project>
       <Name>ConvertLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FileFolderOperationLib\UtilityLib.csproj">
+    <ProjectReference Include="..\DLL\FileFolderOperationLib\UtilityLib.csproj">
       <Project>{19405ebc-d490-4327-882a-93172c57f189}</Project>
       <Name>UtilityLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LogLib\LogLib.csproj">
+    <ProjectReference Include="..\DLL\FileLib\FileLib.csproj">
+      <Project>{b5936808-7891-4cd6-87d1-de60d631395b}</Project>
+      <Name>FileLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DLL\LogLib\LogLib.csproj">
       <Project>{1e5f0c84-d46c-4eb4-b8c9-4d0eafc1f62e}</Project>
       <Name>LogLib</Name>
     </ProjectReference>

@@ -1,8 +1,8 @@
 ﻿using Bloom.Properties;
 using System;
 using System.Collections.Generic;
-using UtilityLib;
-using LogLib;
+using DLL.UtilityLib;
+using DLL.LogLib;
 
 namespace Bloom.Models
 {

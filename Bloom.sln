@@ -8,14 +8,17 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppGroup_UnitTest", "UnitTestProject1\AppGroup_UnitTest.csproj", "{7325CCB0-AA8B-4EA2-A9EA-6BE41565B35D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DLL", "DLL", "{BD81E47B-B7C4-4AF9-A227-9C54E9E89545}"
+	ProjectSection(SolutionItems) = preProject
+		DLL\DLLは例外を送出しないこと = DLL\DLLは例外を送出しないこと
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UtilityLib", "FileFolderOperationLib\UtilityLib.csproj", "{19405EBC-D490-4327-882A-93172C57F189}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UtilityLib", "DLL\FileFolderOperationLib\UtilityLib.csproj", "{19405EBC-D490-4327-882A-93172C57F189}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogLib", "LogLib\LogLib.csproj", "{1E5F0C84-D46C-4EB4-B8C9-4D0EAFC1F62E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogLib", "DLL\LogLib\LogLib.csproj", "{1E5F0C84-D46C-4EB4-B8C9-4D0EAFC1F62E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConvertLib", "ConvertLib\ConvertLib.csproj", "{CF05C50F-749B-4A62-B9E6-BC9B8A6C69D9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConvertLib", "DLL\ConvertLib\ConvertLib.csproj", "{CF05C50F-749B-4A62-B9E6-BC9B8A6C69D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileLib", "FileLib\FileLib.csproj", "{B5936808-7891-4CD6-87D1-DE60D631395B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileLib", "DLL\FileLib\FileLib.csproj", "{B5936808-7891-4CD6-87D1-DE60D631395B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

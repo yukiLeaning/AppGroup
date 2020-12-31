@@ -1,10 +1,10 @@
-﻿using ConvertLib;
+﻿using DLL.ConvertLib;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
-using UtilityLib;
+using DLL.UtilityLib;
 
 namespace Bloom.Views.PopupWindows
 {
