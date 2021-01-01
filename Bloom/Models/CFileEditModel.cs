@@ -1,11 +1,36 @@
 ﻿using Bloom.DataObjects;
 using DLL.FileLib;
 using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Bloom.Models
 {
     class CFileEditModel : AModel
     {
+        /// <summary>
+        /// ファイル属性文字列変換テーブル
+        /// </summary>
+        private readonly Dictionary<FileAttributes, string> str_attributes = new Dictionary<FileAttributes, string>()
+        {
+            { FileAttributes.ReadOnly           ,"読み取り専用" },
+            { FileAttributes.Hidden             ,"隠しファイル" },
+            { FileAttributes.System             ,"システムファイル" },
+            { FileAttributes.Directory          ,"ディレクトリ" },
+            { FileAttributes.Archive            ,"アーカイブ" },
+            { FileAttributes.Device             ,"デバイスファイル" },
+            { FileAttributes.Normal             ,"標準ファイル" },
+            { FileAttributes.Temporary          ,"一時ファイル" },
+            { FileAttributes.SparseFile         ,"スパースファイル" },
+            { FileAttributes.ReparsePoint       ,"リパースポイント" },
+            { FileAttributes.Compressed         ,"圧縮ファイル" },
+            { FileAttributes.Offline            ,"オフライン" },
+            { FileAttributes.NotContentIndexed  ,"インデックス未付属" },
+            { FileAttributes.Encrypted          ,"暗号化ファイル" },
+            { FileAttributes.IntegrityStream    ,"データ整合性ストリーム" },
+            { FileAttributes.NoScrubData        ,"データ整合性未チェック" }
+        };
+
         public CFileEditModel()
         {
             /* NOP */
@@ -32,7 +57,7 @@ namespace Bloom.Models
                 UpdateTime = (DateTime)info.UpdateTime,
                 Owner = info.Owner,
                 OriginalName = info.OriginalName,
-                Attributes = info.Attributes
+                Attributes = this.str_attributes[(FileAttributes)info.Attributes]
             };
             return fileInfo;
         }

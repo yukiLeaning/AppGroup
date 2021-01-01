@@ -86,7 +86,7 @@
     <Folder Include="Views\UserControls\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AppGroup\Bloom.csproj">
+    <ProjectReference Include="..\Bloom\Bloom.csproj">
       <Project>{bc1f01e8-ab69-48fd-88a5-00ba8638dfba}</Project>
       <Name>Bloom</Name>
     </ProjectReference>

@@ -1,0 +1,17 @@
+﻿################################################################################
+# この .gitignore ファイルは Microsoft(R) Visual Studio によって自動的に作成されました。
+################################################################################
+
+/.vs/Bloom/v16
+/Bloom/bin/Debug
+/Bloom/obj/Debug
+/DLL/ConvertLib/bin/Debug
+/DLL/ConvertLib/obj/Debug
+/DLL/FileFolderOperationLib/bin/Debug
+/DLL/FileFolderOperationLib/obj/Debug
+/DLL/FileLib/bin/Debug
+/DLL/FileLib/obj/Debug
+/DLL/LogLib/bin/Debug
+/DLL/LogLib/obj/Debug
+/packages
+/UnitTestProject1/obj/Debug

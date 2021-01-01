@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 
@@ -7,6 +6,9 @@ namespace DLL.FileLib
 {
     public class FileInfomationManager
     {
+        private FileInfo fileInfo;
+        private FileVersionInfo versionInfo;
+
         /// <summary>
         /// ファイル名
         /// </summary>
@@ -22,11 +24,31 @@ namespace DLL.FileLib
         /// <summary>
         /// 作成日
         /// </summary>
-        public DateTime? CreateTime { get; private set; }
+        public DateTime? CreateTime
+        {
+            get { return _CreateTime; }
+            private set
+            {
+                if (_CreateTime == value) return;
+                _CreateTime = value;
+                this.fileInfo.CreationTime = (DateTime)_CreateTime;
+            }
+        }
+        private DateTime? _CreateTime;
         /// <summary>
         /// 更新日
         /// </summary>
-        public DateTime? UpdateTime { get; private set; }
+        public DateTime? UpdateTime 
+        {
+            get { return _UpdateTime; }
+            private set
+            {
+                if (_UpdateTime == value) return;
+                _UpdateTime = value;
+                this.fileInfo.CreationTime = (DateTime)_UpdateTime;
+            }
+        }
+        private DateTime? _UpdateTime;
         /// <summary>
         /// 所有者
         /// </summary>
@@ -38,30 +60,18 @@ namespace DLL.FileLib
         /// <summary>
         /// ファイル属性
         /// </summary>
-        public string Attributes { get; private set; }
-        /// <summary>
-        /// ファイル属性文字列変換テーブル
-        /// </summary>
-        private Dictionary<FileAttributes, string> str_attributes = new Dictionary<FileAttributes, string>()
+        public FileAttributes? Attributes
         {
-            { FileAttributes.ReadOnly           ,"読み取り専用" },
-            { FileAttributes.Hidden             ,"隠しファイル" },
-            { FileAttributes.System             ,"システムファイル" },
-            { FileAttributes.Directory          ,"ディレクトリ" },
-            { FileAttributes.Archive            ,"アーカイブ" },
-            { FileAttributes.Device             ,"デバイスファイル" },
-            { FileAttributes.Normal             ,"標準ファイル" },
-            { FileAttributes.Temporary          ,"一時ファイル" },
-            { FileAttributes.SparseFile         ,"スパースファイル" },
-            { FileAttributes.ReparsePoint       ,"リパースポイント" },
-            { FileAttributes.Compressed         ,"圧縮ファイル" },
-            { FileAttributes.Offline            ,"オフライン" },
-            { FileAttributes.NotContentIndexed  ,"インデックス未付属" },
-            { FileAttributes.Encrypted          ,"暗号化ファイル" },
-            { FileAttributes.IntegrityStream    ,"データ整合性ストリーム" },
-            { FileAttributes.NoScrubData        ,"データ整合性未チェック" }
-        };
+            get { return _Attributes; }
+            private set
+            {
+                if (_Attributes == value) return;
+                _Attributes = value;
 
+            }
+        }
+        private FileAttributes? _Attributes;
+        
         /// <summary>
         /// 禁止
         /// </summary>
@@ -100,17 +110,17 @@ namespace DLL.FileLib
                     throw new FileNotFoundException();
                 }
 
-                FileInfo info = new FileInfo(filePath);
-                FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(filePath);
+                this.fileInfo = new FileInfo(filePath);
+                this.versionInfo = FileVersionInfo.GetVersionInfo(filePath);
                 FileAttributes attributes = File.GetAttributes(filePath);
-                this.Name = info.Name;
-                this.FullName = info.FullName;
-                this.Size = info.Length;
-                this.CreateTime = info.CreationTime;
-                this.UpdateTime = info.LastWriteTime;
-                this.Owner = versionInfo.LegalCopyright;
-                this.OriginalName = versionInfo.OriginalFilename;
-                this.Attributes = this.str_attributes[info.Attributes];
+                this.Name = this.fileInfo.Name;
+                this.FullName = this.fileInfo.FullName;
+                this.Size = this.fileInfo.Length;
+                this.CreateTime = this.fileInfo.CreationTime;
+                this.UpdateTime = this.fileInfo.LastWriteTime;
+                this.Owner = this.versionInfo.LegalCopyright;
+                this.OriginalName = this.versionInfo.OriginalFilename;
+                this.Attributes = this.fileInfo.Attributes;
             }
             catch
             {
@@ -131,8 +141,68 @@ namespace DLL.FileLib
                 (this.Size is long) &&
                 (this.CreateTime is DateTime) &&
                 (this.UpdateTime is DateTime) &&
-                (this.Attributes is string);
+                (this.Attributes is FileAttributes);
             
+            return result;
+        }
+
+        /// <summary>
+        /// 作成日を設定
+        /// </summary>
+        /// <param name="createTime">作成日</param>
+        /// <returns>成否</returns>
+        public bool SetCreateTime(DateTime createTime)
+        {
+            bool result = true;
+            try
+            {
+                this.CreateTime = createTime;
+            }
+            catch
+            {
+                result = false;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// 更新日を設定
+        /// </summary>
+        /// <param name="createTime">更新日</param>
+        /// <returns>成否</returns>
+        public bool SetUpdateTime(DateTime updateTime)
+        {
+            bool result = true;
+            try
+            {
+                this.UpdateTime = updateTime;
+            }
+            catch
+            {
+                result = false;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// ファイル属性を設定
+        /// </summary>
+        /// <param name="fileAttributes">ファイル属性</param>
+        /// <returns>成否</returns>
+        public bool SetFileAttributes(FileAttributes fileAttributes)
+        {
+            bool result = true;
+            try
+            {
+                this.Attributes = fileAttributes;
+            }
+            catch
+            {
+                result = false;
+            }
+
             return result;
         }
     }
