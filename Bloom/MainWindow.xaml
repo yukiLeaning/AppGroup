@@ -12,6 +12,7 @@
         ResizeMode="CanResizeWithGrip"
         AllowsTransparency="True"
         Background="White"
+        Margin="2"
         Loaded="Window_Loaded"
         Unloaded="Window_Unloaded">
 </Window>

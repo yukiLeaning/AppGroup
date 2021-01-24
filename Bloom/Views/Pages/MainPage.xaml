@@ -1,4 +1,4 @@
-﻿<Page x:Class="Bloom.Views.Pages.TopPage"
+﻿<Page x:Class="Bloom.Views.Pages.MainPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:Bloom.Views.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="500" d:DesignWidth="900"
+      Background="Transparent"
       Title="TopPage"
       Loaded="Page_Loaded"
       Unloaded="Page_Unloaded">
@@ -78,7 +79,7 @@
                 </Setter>
                 <Setter Property="FocusVisualStyle" Value="{x:Null}" />
             </Style>
-            <ControlTemplate x:Key="NoBoderButton" TargetType="{x:Type Button}">
+            <ControlTemplate x:Key="NoBoderButtonTemplate" TargetType="{x:Type Button}">
                 <Border
                     x:Name="border"
                     CornerRadius="5">
@@ -88,10 +89,28 @@
                 </Border>
                 <ControlTemplate.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
-                        <Setter TargetName="border" Property="Background" Value="#7FBBDAFF"/>
+                        <Setter TargetName="border" Property="Background" Value="#7FAFD3FF"/>
                     </Trigger>
                     <Trigger Property="IsPressed" Value="True">
-                        <Setter TargetName="border" Property="Background" Value="#B2AFD3FF"/>
+                        <Setter TargetName="border" Property="Background" Value="#4C4E9FFF"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+            <ControlTemplate x:Key="SideButtonTemplate" TargetType="{x:Type Button}">
+                <Border
+                    x:Name="border"
+                    BorderBrush="#4C4E9FFF"
+                    BorderThickness="0,0,0,1">
+                    <ContentPresenter
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+                </Border>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter TargetName="border" Property="Background" Value="#7FAFD3FF"/>
+                    </Trigger>
+                    <Trigger Property="IsPressed" Value="True">
+                        <Setter TargetName="border" Property="Background" Value="#4C4E9FFF"/>
                     </Trigger>
                 </ControlTemplate.Triggers>
             </ControlTemplate>
@@ -104,8 +123,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <!-- System Header -->
         <Grid
@@ -121,22 +140,25 @@
                 x:Name="SystemHeader"
                 Fill="Transparent"/>
             <Button
+                x:Name="MinimizeButton"
                 Grid.Column="1"
                 Content="0"
                 Style="{DynamicResource SystemButtonStyle}"
                 Click="MinimizeButton_Click"/>
             <Button
+                x:Name="m_ResizeButton"
                 Grid.Column="2"
                 Content="1"
                 Style="{DynamicResource SystemButtonStyle}"
                 Click="ResizeButton_Click"/>
             <Button
+                x:Name="CloseButton"
                 Grid.Column="3"
                 Content="r"
                 Style="{DynamicResource SystemButtonStyle}"
                 Click="CloseButton_Click"/>
         </Grid>
-        
+
         <!-- Header -->
         <Grid
             x:Name="m_LeftHeader"
@@ -154,7 +176,7 @@
                     x:Name="m_MenuButton"
                     Grid.Column="0"
                     Click="MenuButton_Click"
-                    Template="{DynamicResource NoBoderButton}">
+                    Template="{DynamicResource NoBoderButtonTemplate}">
                     <Image Margin="5" Source="{StaticResource hamburgerIcon}"/>
                 </Button>
                 <Button
@@ -162,21 +184,28 @@
                     Grid.Column="1"
                     FontSize="{StaticResource L_TextSize}"
                     FontFamily="{StaticResource MainFont}"
-                    Template="{DynamicResource NoBoderButton}"
-                    Content="Bloom">
+                    Template="{DynamicResource NoBoderButtonTemplate}"
+                    Content="Bloom"
+                    Click="MainIcon_Click">
                 </Button>
             </Grid>
         </Grid>
-        
+
         <!-- SideBar -->
-        
+        <StackPanel
+            x:Name="m_SideBar"
+            Grid.Column="0"
+            Grid.Row="2"
+            Margin="5,2">
+
+        </StackPanel>
+
         <!-- Body -->
-        <WrapPanel 
-            x:Name="SelectArea"
+        <Grid
+            x:Name="m_ViewAre"
             Grid.Row="2" 
             Grid.Column="1"
-            Orientation="Vertical"
-            Margin="2">
-        </WrapPanel>
+            Margin="5,2">
+        </Grid>
     </Grid>
 </Page>

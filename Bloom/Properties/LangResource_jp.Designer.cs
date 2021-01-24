@@ -79,6 +79,15 @@ namespace Bloom.Properties {
         }
         
         /// <summary>
+        ///   決裁作成 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string CONTENT_CREATE_DEXISION {
+            get {
+                return ResourceManager.GetString("CONTENT_CREATE_DEXISION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ファイル編集 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string CONTENT_FILE_EDIT {

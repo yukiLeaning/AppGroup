@@ -125,6 +125,10 @@
     <value>構成コピー</value>
     <comment>コントロール文言</comment>
   </data>
+  <data name="CONTENT_CREATE_DEXISION" xml:space="preserve">
+    <value>決裁作成</value>
+    <comment>コントロール文言</comment>
+  </data>
   <data name="CONTENT_FILE_EDIT" xml:space="preserve">
     <value>ファイル編集</value>
     <comment>コントロール文言</comment>

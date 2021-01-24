@@ -34,7 +34,7 @@ namespace Bloom
         /// <param name="e"></param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Page page = new TopPage();
+            Page page = new MainPage();
             this.AddChild(page);
         }
 
